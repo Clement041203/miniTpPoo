@@ -1,24 +1,22 @@
-// Classe principale pour tester le fonctionnement du design pattern
 public class Main {
     public static void main(String[] args) {
-        // Création des cellules
-        Cell emptyCell1 = new EmptyCell();
-        Cell emptyCell2 = new EmptyCell();
-        Cell occupiedCell = new OccupiedCell();
-        
-        // Configuration de la chaîne de responsabilité
-        emptyCell1.setNext(emptyCell2);
-        emptyCell2.setNext(occupiedCell);
-        
-        // Test de la chaîne
-        Item fruit = new Item("Fruit");
-        Item dot = new Item("Dot");
-        Item ghost = new Item("Ghost");
-        Item pacman = new Item("Pacman");
+        // Création du plateau de jeu
+        GameBoard gameBoard = new GameBoard();
 
-        emptyCell1.handleRequest(fruit);
-        emptyCell1.handleRequest(dot);
-        emptyCell1.handleRequest(ghost);
-        emptyCell1.handleRequest(pacman);
+        // Ajout des différents objets du jeu Pacman au plateau
+        Pacman pacman = new Pacman(0, 0);
+        Fruit fruit = new Fruit(5, 0);
+        Ghost ghost = new Ghost(10, 0);
+        gameBoard.addItem(pacman);
+        gameBoard.addItem(fruit);
+        gameBoard.addItem(ghost);
+
+        // Utilisation de l'adapter pour intégrer MarioBross
+        MarioBross marioBross = new MarioBross();
+        MarioBrossAdapter marioBrossAdapter = new MarioBrossAdapter(marioBross, 0, 0);
+        gameBoard.addItem(marioBrossAdapter);
+
+        // Affichage du plateau de jeu
+        gameBoard.renderBoard();
     }
 }
